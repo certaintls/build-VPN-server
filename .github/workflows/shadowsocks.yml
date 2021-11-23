@@ -1,0 +1,30 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Build Shadowosocks Server
+
+# Controls when the workflow will run
+on:
+  # Only run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Set up Docker
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            sudo -i || true
+            curl -fsSL https://get.docker.com -o get-docker.sh
+            sh get-docker.sh
+            docker run --name gost-ss-kcp -p 6543:6543/udp -d ginuerzh/gost -L=ss+kcp://chacha20-ietf-poly1305:${{ secrets.PASSWORD }}@:6543
