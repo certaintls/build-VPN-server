@@ -24,7 +24,6 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            sudo -i || true
             curl -fsSL https://get.docker.com -o get-docker.sh
             sh get-docker.sh || sudo sh get-docker.sh || echo ${{ secrets.PASSWORD }} | sudo -S sh get-docker.sh
             usermod -aG docker $USER || sudo usermod -aG docker $USER || echo ${{ secrets.PASSWORD }} | sudo -S usermod -aG docker $USER
