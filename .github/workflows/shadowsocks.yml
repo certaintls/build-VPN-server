@@ -16,7 +16,7 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Set up Docker
+      - name: Build Shadowsocks with and without KCPTUN
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
@@ -27,4 +27,7 @@ jobs:
             curl -fsSL https://get.docker.com -o get-docker.sh
             sh get-docker.sh || sudo sh get-docker.sh || echo ${{ secrets.PASSWORD }} | sudo -S sh get-docker.sh
             usermod -aG docker $USER || sudo usermod -aG docker $USER || echo ${{ secrets.PASSWORD }} | sudo -S usermod -aG docker $USER
-            docker run --name gost-ss-kcp -p 6543:6543/udp -d ginuerzh/gost -L=ss+kcp://chacha20-ietf-poly1305:${{ secrets.PASSWORD }}@:6543
+            docker run --restart=always -p 6543:6543/udp -d ginuerzh/gost -L=ss+kcp://chacha20-ietf-poly1305:${{ secrets.PASSWORD }}@:6543
+            echo -n chacha20-ietf-poly1305:${{ secrets.PASSWORD }} | base64 | awk '{print "ss://"$1"@${{ secrets.HOST }}:6543?plugin=kcptun;mode;fast2#ss-kcp@${{ secrets.HOST }}"}' | docker run --rm -i --net=none thomasleplus/qrcode qrencode -t ASCIIi
+
+        
