@@ -32,7 +32,7 @@ jobs:
             curl -fsSL https://raw.githubusercontent.com/certaintls/build-VPN-server/main/scripts/wg_config_exit_server.sh -o wg_config_exit_server.sh
             curl -fsSL https://raw.githubusercontent.com/certaintls/build-VPN-server/main/scripts/wg_generate_client.sh -o wg_generate_client.sh
             sh wg_config_exit_server.sh
-            sh wg_generate_client.sh ${{ secrets.HOST }} ${{ secrets.PASSWORD }}
+            sh wg_generate_client.sh ${{ secrets.HOST }}
       - name: Configure your client
         uses: appleboy/ssh-action@master
         with:
