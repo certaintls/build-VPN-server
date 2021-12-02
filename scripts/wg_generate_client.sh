@@ -14,7 +14,9 @@ readonly PRESHARED_KEY=$(docker run --rm -i masipcat/wireguard-go wg genpsk)
 readonly SERVER_PUBLIC_KEY=$(docker exec wireguard wg show ${INTERFACE} public-key)
 
 # Get next free peer IP (This will break after x.x.x.255)
-readonly PEER_ADDRESS=$(docker exec wireguard wg show ${INTERFACE} allowed-ips | cut -f 2 | awk -F'[./]' '{print $1"."$2"."$3"."1+$4"/"$5}' | sort -t '.' -k 1,1 -k 2,2 -k 3,3 -k 4,4 -n | tail -n1)
+readonly NEXT_IP=$(docker exec wireguard wg show ${INTERFACE} allowed-ips | cut -f 2 | awk -F'[./]' '{print $1"."$2"."$3"."1+$4"/"$5}' | sort -t '.' -k 1,1 -k 2,2 -k 3,3 -k 4,4 -n | tail -n1)
+# Use 10.0.0.2 as default if there is no peer. This only works for `Address = 10.0.0.1/24` in server config
+readonly PEER_ADDRESS=${NEXT_IP:-10.0.0.2}
 
 # Add peer
 docker exec wireguard wg set ${INTERFACE} peer ${PUBLIC_KEY} preshared-key < echo ${PRESHARED_KEY} allowed-ips ${PEER_ADDRESS}
