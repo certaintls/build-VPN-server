@@ -42,4 +42,7 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd wireguard
+            echo 'Please see the client configuration below:\n'
+            cat client.conf
+            echo 'Or scan the QR-code below to configure your client:\n'
             cat client.conf | docker run --rm -i --net=none thomasleplus/qrcode qrencode -t ANSIUTF8
