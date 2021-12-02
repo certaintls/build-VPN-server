@@ -16,16 +16,16 @@ readonly SERVER_PUBLIC_KEY=$(docker exec wireguard wg show ${INTERFACE} public-k
 # Get next free peer IP (This will break after x.x.x.255)
 readonly NEXT_IP=$(docker exec wireguard wg show ${INTERFACE} allowed-ips | cut -f 2 | awk -F'[./]' '{print $1"."$2"."$3"."1+$4"/"$5}' | sort -t '.' -k 1,1 -k 2,2 -k 3,3 -k 4,4 -n | tail -n1)
 # Use 10.0.0.2 as default if there is no peer. This only works for `Address = 10.0.0.1/24` in server config
-readonly PEER_ADDRESS=${NEXT_IP:-10.0.0.2}
+readonly PEER_ADDRESS=${NEXT_IP:-10.0.0.2/32}
 
 # Add peer
-docker exec wireguard wg set ${INTERFACE} peer ${PUBLIC_KEY} preshared-key < echo ${PRESHARED_KEY} allowed-ips ${PEER_ADDRESS}
+docker exec wireguard wg set ${INTERFACE} peer ${PUBLIC_KEY} preshared-key ${PRESHARED_KEY} allowed-ips ${PEER_ADDRESS}
 
 # Logging
-echo "Added peer ${PEER_ADDRESS} with public key ${PUBLIC_KEY}"
+echo "Added peer ${PEER_ADDRESS} with public key ${PUBLIC_KEY} \n"
 
-# Generate peer config QR code
-cat << END_OF_CONFIG | docker run --rm -i --net=none thomasleplus/qrcode qrencode -t ANSIUTF8
+# Write the config to a file
+cat << END_OF_CONFIG > client.conf
 [Interface]
 Address = ${PEER_ADDRESS}
 PrivateKey = ${PRIVATE_KEY}
