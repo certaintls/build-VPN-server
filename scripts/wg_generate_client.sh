@@ -8,7 +8,7 @@ readonly INTERFACE="wg0"
 readonly PRIVATE_KEY=$(docker run --rm -i masipcat/wireguard-go wg genkey)
 readonly PUBLIC_KEY=$(echo ${PRIVATE_KEY} | docker run --rm -i masipcat/wireguard-go wg pubkey)
 readonly SERVER_ADDRESS=$1
-readonly PRESHARED_KEY=$2
+readonly PRESHARED_KEY=$(docker run --rm -i masipcat/wireguard-go wg genpsk)
 
 # Read server key from interface
 readonly SERVER_PUBLIC_KEY=$(docker exec wireguard wg show ${INTERFACE} public-key)
@@ -17,7 +17,7 @@ readonly SERVER_PUBLIC_KEY=$(docker exec wireguard wg show ${INTERFACE} public-k
 readonly PEER_ADDRESS=$(docker exec wireguard wg show ${INTERFACE} allowed-ips | cut -f 2 | awk -F'[./]' '{print $1"."$2"."$3"."1+$4"/"$5}' | sort -t '.' -k 1,1 -k 2,2 -k 3,3 -k 4,4 -n | tail -n1)
 
 # Add peer
-docker exec wireguard wg set ${INTERFACE} peer ${PUBLIC_KEY} preshared-key <(echo ${PRESHARED_KEY}) allowed-ips ${PEER_ADDRESS}
+docker exec wireguard wg set ${INTERFACE} peer ${PUBLIC_KEY} preshared-key < echo ${PRESHARED_KEY} allowed-ips ${PEER_ADDRESS}
 
 # Logging
 echo "Added peer ${PEER_ADDRESS} with public key ${PUBLIC_KEY}"
