@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Generate server keys
-mkdir wireguard && cd wireguard
 docker run --rm -i masipcat/wireguard-go wg genkey > privatekey
 docker run --rm -i masipcat/wireguard-go wg pubkey < privatekey > publickey
 
