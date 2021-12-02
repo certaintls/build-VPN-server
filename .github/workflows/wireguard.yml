@@ -33,3 +33,13 @@ jobs:
             curl -fsSL https://raw.githubusercontent.com/certaintls/build-VPN-server/main/scripts/wg_generate_client.sh -o wg_generate_client.sh
             sh wg_config_exit_server.sh
             sh wg_generate_client.sh ${{ secrets.HOST }} ${{ secrets.PASSWORD }}
+      - name: Configure your client
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd wireguard
+            cat client.conf | docker run --rm -i --net=none thomasleplus/qrcode qrencode -t ANSIUTF8
