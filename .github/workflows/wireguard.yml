@@ -33,12 +33,6 @@ jobs:
             curl -fsSL https://raw.githubusercontent.com/certaintls/build-VPN-server/main/scripts/wg_generate_client.sh -o wg_generate_client.sh
             sh wg_config_exit_server.sh
             sh wg_generate_client.sh ${{ secrets.HOST }} ${{ secrets.PASSWORD }}
-  Configure:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
       - name: Configure your client
         uses: appleboy/ssh-action@master
         with:
