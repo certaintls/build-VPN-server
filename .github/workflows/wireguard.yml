@@ -43,6 +43,10 @@ jobs:
           script: |
             cd wireguard
             echo 'Please see the client configuration below:'
+            echo ' '
+            echo '=========================================='
             cat client.conf
+            echo '=========================================='
+            echo ' '
             echo 'Or scan the QR-code below to configure your client:'
             cat client.conf | docker run --rm -i --net=none thomasleplus/qrcode qrencode -t ANSIUTF8
