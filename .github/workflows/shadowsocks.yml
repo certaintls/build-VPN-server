@@ -29,29 +29,29 @@ jobs:
             sh get-docker.sh || sudo sh get-docker.sh || echo ${{ secrets.PASSWORD }} | sudo -S sh get-docker.sh
             usermod -aG docker $USER || sudo usermod -aG docker $USER || echo ${{ secrets.PASSWORD }} | sudo -S usermod -aG docker $USER
             docker stop gost-ss-kcp gost-ss && docker rm -v gost-ss-kcp gost-ss
-            echo -n ss_password= ; echo -n $RANDOM | md5sum | head -c 10 >> $GITHUB_ENV
-            docker run --name gost-ss-kcp --restart=always -p 6543:6543/udp -d ginuerzh/gost -L=ss+kcp://chacha20-ietf-poly1305:${{ env.ss_password }}@:6543
-            docker run --name gost-ss --restart=always -p 543:543 -d ginuerzh/gost -L=ss://chacha20-ietf-poly1305:${{ env.ss_password }}@:543
+            export ss_password=`echo -n $RANDOM | md5sum | head -c 10`
+            docker run --name gost-ss-kcp --restart=always -p 6543:6543/udp -d ginuerzh/gost -L=ss+kcp://chacha20-ietf-poly1305:$ss_password@:6543
+            docker run --name gost-ss --restart=always -p 543:543 -d ginuerzh/gost -L=ss://chacha20-ietf-poly1305:$ss_password@:543
       - name: Configure your client (SS+kcptun)
         run: |
           echo 'Please see the client configuration for Shadowsocks over kcptun below:'
           echo ' '
           echo '=========================================='
-          echo -n chacha20-ietf-poly1305:${{ env.ss_password }} | base64 | awk '{print "ss://"$1"@${{ secrets.HOST }}:6543?plugin=kcptun;mode;fast3#real-time-optimized@${{ secrets.HOST }}"}'
+          echo -n chacha20-ietf-poly1305:$ss_password | base64 | awk '{print "ss://"$1"@${{ secrets.HOST }}:6543?plugin=kcptun;mode;fast3#real-time-optimized@${{ secrets.HOST }}"}'
           echo '=========================================='
           echo ' '
           echo 'Or scan the QR-code below to configure your client for Shadowsocks over kcptun:'
-          echo -n chacha20-ietf-poly1305:${{ env.ss_password }} | base64 | awk '{print "ss://"$1"@${{ secrets.HOST }}:6543?plugin=kcptun;mode;fast3#real-time-optimized@${{ secrets.HOST }}"}' | docker run --rm -i --net=none thomasleplus/qrcode qrencode -t ANSIUTF8
+          echo -n chacha20-ietf-poly1305:$ss_password | base64 | awk '{print "ss://"$1"@${{ secrets.HOST }}:6543?plugin=kcptun;mode;fast3#real-time-optimized@${{ secrets.HOST }}"}' | docker run --rm -i --net=none thomasleplus/qrcode qrencode -t ANSIUTF8
       - name: Configure your client (SS)
         run: |
           echo 'Please see the client configuration for Shadowsocks below:'
           echo ' '
           echo '=========================================='
-          echo -n chacha20-ietf-poly1305:${{ env.ss_password }} | base64 | awk '{print "ss://"$1"@${{ secrets.HOST }}:543#battery-optimized@${{ secrets.HOST }}"}'
+          echo -n chacha20-ietf-poly1305:$ss_password | base64 | awk '{print "ss://"$1"@${{ secrets.HOST }}:543#battery-optimized@${{ secrets.HOST }}"}'
           echo '=========================================='
           echo ' '
           echo 'Or scan the QR-code below to configure your client for Shadowsocks:'
-          echo -n chacha20-ietf-poly1305:${{ env.ss_password }} | base64 | awk '{print "ss://"$1"@${{ secrets.HOST }}:543#battery-optimized@${{ secrets.HOST }}"}' | docker run --rm -i --net=none thomasleplus/qrcode qrencode -t ANSIUTF8
+          echo -n chacha20-ietf-poly1305:$ss_password | base64 | awk '{print "ss://"$1"@${{ secrets.HOST }}:543#battery-optimized@${{ secrets.HOST }}"}' | docker run --rm -i --net=none thomasleplus/qrcode qrencode -t ANSIUTF8
           
 
         
