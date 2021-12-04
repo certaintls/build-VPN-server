@@ -12,7 +12,7 @@ In summary, you need to `fork` this repository, set up your server credentials v
 ### Detailed Instruction
 
 1. Prerequisite: have SSH access to a server with root permission. If you don't have a server yet, buying a $5/month instance from [Linode](https://linode.com) or [Digital Ocean](https://www.digitalocean.com/) would be an easy start.
-2. [Sign in to GitHub](Sign in to GitHub)
+2. [Sign in to GitHub](https://github.com/login)
 3. `Fork` this repository, by click the Fork button in the top-right corner of the page. ![Fork this project](https://docs.github.com/assets/images/help/repository/fork_button.jpg)
 4. In your forked/own repository, set up Github Encrypted Secrets for your server: `HOST`, `USERNAME`, either `PASSWORD` or `KEY`, and optionally `PORT` if your port number is not default. ![Set your SSH credentials via Github Secrets](https://raw.githubusercontent.com/certaintls/build-VPN-server/main/docs/create_github_secrets.jpeg) 
 5. On your repository navigation, click `Actions`, then click `Build Shadowsocks Server` or `Build Wireguard Server`, then click `Run workflow` (from `main`) ![Trigger a build VPN workflow](https://raw.githubusercontent.com/certaintls/build-VPN-server/main/docs/start_build_vpn_workflow.jpeg)
