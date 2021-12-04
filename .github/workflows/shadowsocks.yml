@@ -30,6 +30,7 @@ jobs:
             usermod -aG docker $USER || sudo usermod -aG docker $USER || echo ${{ secrets.PASSWORD }} | sudo -S usermod -aG docker $USER
             docker stop gost-ss-kcp gost-ss && docker rm -v gost-ss-kcp gost-ss
             export ss_password=`echo -n $RANDOM | md5sum | head -c 10`
+            echo "::set-env name=ss_password::$ss_password"
             docker run --name gost-ss-kcp --restart=always -p 6543:6543/udp -d ginuerzh/gost -L=ss+kcp://chacha20-ietf-poly1305:$ss_password@:6543
             docker run --name gost-ss --restart=always -p 543:543 -d ginuerzh/gost -L=ss://chacha20-ietf-poly1305:$ss_password@:543
       - name: Configure your client (SS+kcptun)
