@@ -3,7 +3,7 @@
 This project offers an automation tool to let you **securely** build your **high speed** [Shadosocks](https://shadowsocks.org/) and/or [Wireguard](https://www.wireguard.com/) VPN servers **in one minute** using [Github.com Action](https://github.com/features/actions). With a 5 USD/month server from common cloud providers like [Linode](https://linode.com), [Digital Ocean](https://www.digitalocean.com/), and so on, you can stream 4K videos (Speed >= 25 Mpbs) in real time.
 
 *Shortlink: [`http://git.io/buildVPN`](http://git.io/buildVPN)*
-*Read this in other languages: [English](https://github.com/certaintls/build-VPN-server/blob/main/README.md), [简体中文](https://github.com/certaintls/build-VPN-server/blob/main/docs/README.zh-cn.md)
+*Read this in other languages: [English](https://github.com/certaintls/build-VPN-server/blob/main/README.md), [简体中文](https://github.com/certaintls/build-VPN-server/blob/main/docs/README.zh-cn.md)*
 
 ## How to use
 
