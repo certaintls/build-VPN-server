@@ -1,6 +1,6 @@
 # 构建您自己的 VPN 服务器
 
-这个项目提供了一个自动化工具，让你**安全**构建你的**高速** [Shadosocks](https://shadowsocks.org/) 和/或 [Wireguard](https://www.wireguard.com/) VPN 服务器**在一分钟内** :zap: 使用 [Github.com Action](https://github.com/features/actions)。使用来自 [Linode](https://linode.com)、[Digital Ocean](https://www.digitalocean.com/) 等常见云提供商的 :moneybag: 5 美元/月服务器，您可以实时流式传输 4K 视频（速度 >= 25 Mpbs）。
+这个项目提供了一个自动化工具，让你**安全**构建你的**高速** [Shadosocks](https://shadowsocks.org/) 和/或 [Wireguard](https://www.wireguard.com/) VPN 服务器**在一分钟内** :zap: 使用 [Github.com Action](https://github.com/features/actions)。使用来自 [Linode](https://linode.com)、[Digital Ocean](https://www.digitalocean.com/) 等常见云提供商的 :moneybag: 5 美元/月服务器，您可以实时流式传输 4K 视频（速度 >= 25 Mpbs）。一旦你生成完你的VPN服务器配置信息，你可以简单地在[手机上扫描生成的二维码，立刻使用服务](https://github.com/certaintls/build-VPN-server/blob/main/docs/Client-Configurations.zh-cn.md)。
 
 *短链接：[`http://git.io/buildVPN`](http://git.io/buildVPN)*
 *以其他语言阅读：[英文](https://github.com/certaintls/build-VPN-server/blob/main/README.md)，[简体中文](https://github.com/certaintls/build-VPN-server/blob/main/docs/README.zh-cn.md)*
