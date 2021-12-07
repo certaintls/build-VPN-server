@@ -7,8 +7,8 @@ VPN 的客户端应用程序可以进行不同的配置以支持不同的用例�
 在此用例中，VPN 服务被配置为桌面上特定端口上可用的 HTTP 代理。然后，浏览器扩展程序可以将您的网络流量重新路由到此本地端口以使用 VPN 服务。此配置可以利用路由规则列表仅将流量（被阻止）路由到 VPN 服务。因此，您可以使用常规 Internet 连接浏览其余的网页。此配置可以为通过本地连接提供的站点以及通过 VPN 服务阻止的站点提供最佳速度。 Shadowsocks 但不是 Wireguard 可以支持这种配置。
 要设置它，您通常需要
 
-1.在[谷歌浏览器](https://www.google.com/chrome/)上安装[Proxy SwitchyOmega](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif)
-2.无论你的操作系统（Windows、MacOS还是Linux），[安装Docker](https://docs.docker.com/get-docker/)，然后运行这个命令`docker run --name gost-ss-kcp - p 9999:9999 -d ginuerzh/gost -L=:9999 -F=ss+kcp://chacha20-ietf-poly1305:SS_PASSWORD@SERVER_ADDRESS:6543?nodelay=true`
+1. 在[谷歌浏览器](https://www.google.com/chrome/)上安装[Proxy SwitchyOmega](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif)
+2. 无论你的操作系统（Windows、MacOS还是Linux），[安装Docker](https://docs.docker.com/get-docker/)，然后运行这个命令`docker run --name gost-ss-kcp - p 9999:9999 -d ginuerzh/gost -L=:9999 -F=ss+kcp://chacha20-ietf-poly1305:SS_PASSWORD@SERVER_ADDRESS:6543?nodelay=true`
     * `SS_PASSWORD`：您在 Github.com Action 工作流程中生成的 Shadowsocks 密码
     * `SERVER_ADDRESS`：您的服务器地址
 3. 配置您的 SwitchOmega 扩展以在端口“9999”上使用本地“socks5”代理。然后，设置你的转发规则，或者订阅一个在线列表（例如中国用户可以订阅[GFW列表](https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt)）
